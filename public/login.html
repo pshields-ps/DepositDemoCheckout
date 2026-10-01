@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Deposit Demo</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-mark">D</span>
+        Deposit Demo
+      </a>
+      <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="/login.html" class="active" id="nav-login">Login</a>
+        <a href="/deposit.html" id="nav-deposit">Deposit</a>
+        <span id="nav-user" class="nav-user hidden"></span>
+        <a href="#" id="nav-logout" class="hidden">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <div class="container login-container">
+      <section class="card login-card">
+        <h1 class="page-title">Sign in</h1>
+        <p class="page-subtitle">Demo login — any password works. Your email is linked to your Paysafe customer profile.</p>
+
+        <div id="error-alert" class="alert alert-error hidden"></div>
+
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" required maxlength="255" value="john.doe@example.com" autocomplete="username">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required value="demo1234" autocomplete="current-password">
+            <p class="field-hint">This is a dummy login — any password is accepted.</p>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg full-width-btn">Sign in</button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Demo application · <a href="/">Back to home</a>
+    </div>
+  </footer>
+
+  <script src="/js/auth.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

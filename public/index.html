@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deposit Demo — Secure Wallet Deposits</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-mark">D</span>
+        Deposit Demo
+      </a>
+      <nav class="nav-links">
+        <a href="/" class="active">Home</a>
+        <a href="/login.html" id="nav-login">Login</a>
+        <a href="/deposit.html" id="nav-deposit" class="hidden">Deposit</a>
+        <span id="nav-user" class="nav-user hidden"></span>
+        <a href="#" id="nav-logout" class="hidden">Logout</a>
+        <a href="https://developer.paysafe.com/en/api-docs/paysafe-checkout/overview/" target="_blank" rel="noopener">Paysafe Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <span class="hero-badge">Powered by Paysafe Checkout</span>
+        <h1>Fund your account securely</h1>
+        <p>
+          Sign in with your email to make fast, secure deposits using cards, digital wallets,
+          and local payment methods through Paysafe's hosted Checkout.
+        </p>
+        <div class="hero-actions">
+          <a href="/login.html" class="btn btn-primary btn-lg" id="hero-login-btn">Sign in to Deposit</a>
+          <a href="/deposit.html" class="btn btn-primary btn-lg hidden" id="hero-deposit-btn">Make a Deposit</a>
+          <a href="https://developer.paysafe.com/en/api-docs/paysafe-checkout/how-checkout-works/" target="_blank" rel="noopener" class="btn btn-secondary btn-lg">View Integration Guide</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>PCI-compliant checkout</h3>
+            <p>Payment details are collected in Paysafe's secure hosted iframe — reducing your PCI scope.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">💳</div>
+            <h3>Saved cards</h3>
+            <p>Your login email links to your Paysafe customer profile so saved cards return on your next deposit.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Simple integration</h3>
+            <p>Load the Checkout SDK, call setup with your public API key, and process payments server-side.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Demo application using <a href="https://developer.paysafe.com/en/api-docs/paysafe-checkout/how-checkout-works/" target="_blank" rel="noopener">Paysafe Checkout</a>.
+      For test use only.
+    </div>
+  </footer>
+
+  <script src="/js/auth.js"></script>
+  <script>
+    DepositAuth.initNav();
+    if (DepositAuth.getSession()) {
+      document.getElementById('hero-login-btn').classList.add('hidden');
+      document.getElementById('hero-deposit-btn').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

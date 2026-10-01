@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deposit &amp; Withdraw — Deposit Demo</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link id="theme-stylesheet" rel="stylesheet" href="/css/theme-cricket.css">
+  <script src="https://hosted.paysafe.com/checkout/v2/paysafe.checkout.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-mark">D</span>
+        Deposit Demo
+      </a>
+      <nav class="nav-links">
+        <a href="/">Home</a>
+        <a href="/login.html" id="nav-login" class="hidden">Login</a>
+        <a href="/deposit.html" class="active" id="nav-deposit">Deposit</a>
+        <span id="nav-user" class="nav-user hidden"></span>
+        <a href="#" id="nav-logout" class="hidden">Logout</a>
+        <a href="https://developer.paysafe.com/en/api-docs/paysafe-checkout/overview/" target="_blank" rel="noopener">Paysafe Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <div class="container">
+      <h1 class="page-title" id="page-title">Make a deposit</h1>
+      <p class="page-subtitle" id="page-subtitle">Signed in as <strong id="logged-in-email">—</strong></p>
+
+      <div id="config-alert" class="alert alert-info hidden"></div>
+      <div id="error-alert" class="alert alert-error hidden"></div>
+
+      <div class="deposit-layout">
+        <section class="card">
+          <h2 id="form-section-title">Deposit details</h2>
+
+          <form id="deposit-form" novalidate>
+            <div class="form-group">
+              <label>Transaction type</label>
+              <div class="transaction-options" id="transaction-options">
+                <button type="button" class="transaction-option selected" data-type="deposit">Deposit</button>
+                <button type="button" class="transaction-option" data-type="withdrawal">Withdrawal</button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName" name="firstName" required maxlength="80" readonly>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName" name="lastName" required maxlength="80" readonly>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" required maxlength="255" readonly>
+            </div>
+
+            <h3 class="form-section-title">Billing address</h3>
+
+            <div class="form-group">
+              <label for="billingNickName">Address nickname</label>
+              <input type="text" id="billingNickName" name="billingNickName" maxlength="50" placeholder="John Dee" value="John Dee">
+            </div>
+
+            <div class="form-group">
+              <label for="billingStreet">Street</label>
+              <input type="text" id="billingStreet" name="billingStreet" required maxlength="255" placeholder="123 Street" value="123 Street">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="billingCity">City</label>
+                <input type="text" id="billingCity" name="billingCity" required maxlength="80" placeholder="London" value="London">
+              </div>
+              <div class="form-group">
+                <label for="billingZip">Postcode</label>
+                <input type="text" id="billingZip" name="billingZip" required maxlength="20" placeholder="EC12 7HH" value="EC12 7HH">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="billingCountry">Country</label>
+              <input type="text" id="billingCountry" name="billingCountry" required maxlength="2" placeholder="GB" value="GB" pattern="[A-Za-z]{2}" title="Two-letter country code, e.g. GB">
+            </div>
+
+            <div class="form-group">
+              <label>Select amount</label>
+              <div class="amount-options" id="amount-options">
+                <button type="button" class="amount-option" data-amount="1000">£10.00</button>
+                <button type="button" class="amount-option selected" data-amount="2500">£25.00</button>
+                <button type="button" class="amount-option" data-amount="5000">£50.00</button>
+              </div>
+              <label for="customAmount">Or enter custom amount (GBP)</label>
+              <input type="number" id="customAmount" name="customAmount" min="1" max="9999" step="0.01" placeholder="25.00">
+            </div>
+
+            <button type="submit" id="checkout-btn" class="btn btn-primary btn-lg full-width-btn" disabled>
+              Deposit Now
+            </button>
+          </form>
+
+          <div class="checkout-note" id="checkout-note">
+            <strong>Deposits:</strong> Funds are collected via the Payments API after Checkout tokenization.
+            Apple Pay and card are available when configured in your Paysafe account.
+            <strong>Withdrawals:</strong> Set <code>payout: true</code> to launch withdrawal Checkout, then complete via the
+            <a href="https://developer.paysafe.com/en/api-docs/paysafe-checkout/withdrawal/" target="_blank" rel="noopener">Standalone Credit API</a>.
+            Saved cards load automatically when you have a profile.
+          </div>
+        </section>
+
+        <aside class="card">
+          <h2>Summary</h2>
+          <div class="summary-row">
+            <span class="summary-label">Type</span>
+            <span id="summary-transaction-type">Deposit</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Account</span>
+            <span id="summary-customer-id" class="summary-value-muted">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Amount</span>
+            <span id="summary-amount">£25.00</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Currency</span>
+            <span id="summary-currency">GBP</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Environment</span>
+            <span id="summary-environment">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Saved cards</span>
+            <span id="saved-cards-status" class="summary-value-muted hidden">—</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="summary-total">£25.00</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Secured by Paysafe Checkout · <a href="https://developer.paysafe.com/en/api-docs/paysafe-checkout/how-checkout-works/" target="_blank" rel="noopener">Integration docs</a>
+      <div class="footer-theme">
+        <label for="theme-select">Style</label>
+        <select id="theme-select" aria-label="Choose site style">
+          <option value="cricket">Cricket Draft</option>
+          <option value="classic">Classic</option>
+        </select>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/theme.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/checkout.js"></script>
+</body>
+</html>
