@@ -57,16 +57,57 @@ A demo deposit website integrated with [Paysafe Checkout](https://developer.pays
 ## Project structure
 
 ```
-├── start.ps1           # PowerShell web server + Payments API proxy
-├── start.bat           # Double-click launcher
-├── public/
-│   ├── index.html      # Home page
-│   ├── deposit.html    # Deposit / payment page
-│   ├── css/style.css
-│   └── js/checkout.js  # Paysafe Checkout integration
-├── .env                # Your API credentials (not committed)
+├── api/index.js        # Node serverless entry (Vercel + local npm start)
+├── lib/                # Shared config / Paysafe / customer helpers
+├── start.ps1           # Optional Windows PowerShell server (no Node)
+├── start.bat           # Double-click launcher for start.ps1
+├── public/             # Static UI
+├── package.json
+├── vercel.json         # Vercel builds + routes
+├── .env                # Local secrets (not committed)
 └── .env.example
 ```
+
+## Deploy on Vercel (Node serverless)
+
+PowerShell (`start.ps1`) cannot run on Vercel. Use the Node entry in `api/index.js` (zero npm dependencies; Node 18+).
+
+1. Install the Vercel CLI (once):
+
+   ```bash
+   npm install -g vercel
+   ```
+
+2. In the Vercel project settings (or via CLI prompts), add the same env vars as `.env.example` (`PAYSAFE_*`). Do **not** commit `.env`.
+
+3. Local with Vercel:
+
+   ```bash
+   npm run dev
+   ```
+
+   Or: `vercel dev` → typically http://localhost:3000
+
+4. Local without Vercel:
+
+   ```bash
+   npm start
+   ```
+
+   → http://localhost:4000 (or `PORT` from `.env`)
+
+5. Deploy:
+
+   ```bash
+   vercel          # preview deployment
+   vercel --prod   # production
+   ```
+
+6. Smoke-check: `GET /api/health` on your deployment URL.
+
+**Note:** Saved customer profiles use the filesystem. On Vercel that is ephemeral (`/tmp`). For durable storage, use a database or KV later.
+
+Windows-only alternative (not for Vercel): `.\start.ps1`.
 
 ## Security notes
 

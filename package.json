@@ -1,0 +1,17 @@
+{
+  "name": "deposit-demo-checkout",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Paysafe Checkout deposit demo — Node serverless API for Vercel",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "vercel dev",
+    "deploy": "vercel",
+    "deploy:prod": "vercel --prod"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {}
+}
